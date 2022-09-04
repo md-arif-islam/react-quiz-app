@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Button from "./Button";
 import Form from "./Form";
 import TextInput from "./TextInput";
@@ -26,7 +27,7 @@ export default function LoginForm() {
       {/* {error && <p className="error">{error}</p>} */}
 
       <div className="info">
-        Don't have an account? <a href="/signup">Sign Up</a> instead.
+        Don't have an account? <Link to="/signup">Sign Up</Link> instead.
       </div>
     </Form>
   );
