@@ -1,5 +1,17 @@
+import "../styles/App.css";
+import Layout from "./Layout";
+import Result from "./pages/Result";
+
 function App() {
-  return <div className="App">Hello World</div>;
+  return (
+    <Layout>
+      {/* <Home /> */}
+      {/* <Signup /> */}
+      {/* <Login /> */}
+      {/* <Quiz /> */}
+      <Result />
+    </Layout>
+  );
 }
 
 export default App;
