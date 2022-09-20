@@ -1,32 +1,43 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { get, getDatabase, orderByKey, query, ref } from "firebase/database";
+import {
+  get,
+  getDatabase,
+  limitToFirst,
+  orderByKey,
+  query,
+  ref,
+  startAt,
+} from "firebase/database";
 import { useEffect, useState } from "react";
 
-export default function useVideoList() {
+export default function useVideoList(page) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [videos, setVideos] = useEffect([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     async function fetchVideos() {
-      // Database related works
       const db = getDatabase();
-      const videoRef = ref(db, "videos");
-      const videoQuery = query(videoRef, orderByKey());
+      const videosRef = ref(db, "videos");
+      const videoQuery = query(
+        videosRef,
+        orderByKey(),
+        startAt("" + page),
+        limitToFirst(15)
+      );
 
       try {
         setError(false);
         setLoading(true);
-        // Request firebase database
-
+        // Request firebase databse
         const snapshot = await get(videoQuery);
         setLoading(false);
-
         if (snapshot.exists()) {
           setVideos((prevVideos) => {
-            return [...prevVideos, ...Object.values(snapshot.val)];
+            return [...prevVideos, ...Object.values(snapshot.val())];
           });
         } else {
+          setHasMore(false);
         }
       } catch (error) {
         console.log(error);
@@ -36,11 +47,12 @@ export default function useVideoList() {
     }
 
     fetchVideos();
-  }, []);
+  }, [page]);
 
   return {
     loading,
     error,
     videos,
+    hasMore,
   };
 }

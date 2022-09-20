@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Button from "./Button";
 import Checkbox from "./Checkbox";
@@ -17,7 +17,7 @@ export default function SignupForm() {
   const [loading, setLoading] = useState();
 
   const { signup } = useAuth();
-  const navigate = useNavigate();
+  const history = useHistory();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -30,7 +30,7 @@ export default function SignupForm() {
       setError("");
       setLoading(true);
       await signup(email, password, username);
-      navigate("/");
+      history.push("/");
     } catch (err) {
       console.log(err);
       setLoading(false);

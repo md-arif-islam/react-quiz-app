@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Button from "./Button";
 import Form from "./Form";
@@ -13,7 +13,7 @@ export default function LoginForm() {
   const [loading, setLoading] = useState();
 
   const { login } = useAuth();
-  const navigate = useNavigate();
+  const history = useHistory();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -22,7 +22,7 @@ export default function LoginForm() {
       setError("");
       setLoading(true);
       await login(email, password);
-      navigate("/");
+      history.push("/");
     } catch (err) {
       console.log(err);
       setLoading(false);
