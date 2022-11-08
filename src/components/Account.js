@@ -9,9 +9,7 @@ export default function Account() {
     <div className={classes.account}>
       {currentUser ? (
         <>
-          <span className="material-icons-outlined" title="Account">
-            account_circle
-          </span>
+          <img style={{ height: "30px" }} src={currentUser.photoURL} />
           <span>{currentUser.displayName}</span>
           <span
             className="material-icons-outlined"

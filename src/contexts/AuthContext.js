@@ -18,6 +18,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState();
+  const [photoURL, setPhotoURL] = useState();
 
   useEffect(() => {
     const auth = getAuth();
@@ -30,7 +31,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   //Sign Function
-  async function signup(email, password, username) {
+  async function signup(email, password, username, photoURL) {
     const auth = getAuth();
 
     await createUserWithEmailAndPassword(auth, email, password);
@@ -38,6 +39,7 @@ export function AuthProvider({ children }) {
     // Update Profile
     await updateProfile(auth.currentUser, {
       displayName: username,
+      photoURL: photoURL,
     });
 
     const user = auth.currentUser;

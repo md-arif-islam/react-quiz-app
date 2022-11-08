@@ -9,6 +9,7 @@ import TextInput from "./TextInput";
 export default function SignupForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [agree, setAgree] = useState("");
@@ -29,7 +30,7 @@ export default function SignupForm() {
     try {
       setError("");
       setLoading(true);
-      await signup(email, password, username);
+      await signup(email, password, username, photoURL);
       history.push("/");
     } catch (err) {
       console.log(err);
@@ -56,6 +57,14 @@ export default function SignupForm() {
         icon="alternate_email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+      />
+      <TextInput
+        type="text"
+        required
+        placeholder="photoURL"
+        icon="alternate_email"
+        value={photoURL}
+        onChange={(e) => setPhotoURL(e.target.value)}
       />
 
       <TextInput
